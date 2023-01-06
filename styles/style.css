@@ -300,7 +300,8 @@ select{
   margin: 0 0 8px 0;
   position: relative;
   background-color: rgba(28, 149, 219, 0.5);
-  max-height: max-content;  
+  /* max-height: max-content;   */
+  height: fit-content;
 }
 
 .card p {

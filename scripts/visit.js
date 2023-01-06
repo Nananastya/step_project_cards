@@ -20,8 +20,8 @@ class Visit {
     render(container = document.body) {
         this.createElem();
         container.append(this.divCard);
-        this.bttnDel.addEventListener("click", this.deleteAction.bind(this));
-        this.bttnEdit.addEventListener("click", this.editAction.bind(this));
+/*         this.bttnDel.addEventListener("click", this.deleteAction?.bind(this));
+        this.bttnEdit.addEventListener("click", this.editAction?.bind(this)); */
     }
 }
 
@@ -158,7 +158,7 @@ class VisitDentist extends Visit {
         this.urgencyContainer.innerHTML = `<span class="visit-field-name">Терміновість: </span>${this.urgency}`;
         this.purposeContainer.innerHTML = `<span class="visit-field-name">Ціль візиту: </span>${this.purpose}`;
         this.statusContainer.innerHTML = `<span class="visit-field-name">Статус: </span>${this.status}`;
-        this.buttonShowMoreLess.innerText = "Show more";
+        this.buttonShowMoreLess.innerText = "Розгорнути";
         this.lastDateVisitContainer.innerHTML = `<span class="visit-field-name">Останній візит: </span>${this.lastDateVisit}`;
         this.contentContainer.append(
             this.fullNameContainer,
@@ -252,6 +252,7 @@ class VisitCardiologist extends Visit {
         this.buttonShowMoreLess.addEventListener("click", () => {
             if (this.buttonShowMoreLess.innerText === "Розгорнути") {
                 this.buttonShowMoreLess.innerText = "Згорнути";
+                console.log(this.contentContainer)
                 this.contentContainer.append(
                     this.ageContainer,
                     this.heartIllnessContainer,
@@ -263,6 +264,7 @@ class VisitCardiologist extends Visit {
                     this.statusContainer
                 );
             } else {
+                console.log(this.contentContainer)
                 this.buttonShowMoreLess.innerText = "Розгорнути";
                 this.ageContainer.remove();
                 this.heartIllnessContainer.remove();
@@ -296,6 +298,24 @@ new VisitCardiologist(
 
 
 new VisitDentist(
+    'age',
+    'desc',
+    'doctor',
+    'fullName',
+    'urgency',
+    'purpose',
+    'statusVisit',
+    'heartIllness',
+    'id',
+    'pressure',
+    'weightIndex',
+    'lastDateVisit',
+    'edit',
+    'deleteF'
+).render(container);
+
+
+/* new VisitTherapist(
     age,
     desc,
     doctor,
@@ -310,22 +330,4 @@ new VisitDentist(
     lastDateVisit,
     edit,
     deleteF
-).render(container);
-
-
-new VisitTherapist(
-    age,
-    desc,
-    doctor,
-    fullName,
-    urgency,
-    purpose,
-    statusVisit,
-    heartIllness,
-    id,
-    pressure,
-    weightIndex,
-    lastDateVisit,
-    edit,
-    deleteF
-).render(container);
+).render(container); */
