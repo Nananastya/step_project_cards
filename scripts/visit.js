@@ -20,8 +20,8 @@ class Visit {
     render(container = document.body) {
         this.createElem();
         container.append(this.divCard);
-/*         this.bttnDel.addEventListener("click", this.deleteAction?.bind(this));
-        this.bttnEdit.addEventListener("click", this.editAction?.bind(this)); */
+        this.bttnDel.addEventListener("click", this.deleteAction?.bind(this));
+        this.bttnEdit.addEventListener("click", this.editAction?.bind(this));
     }
 }
 
@@ -252,7 +252,6 @@ class VisitCardiologist extends Visit {
         this.buttonShowMoreLess.addEventListener("click", () => {
             if (this.buttonShowMoreLess.innerText === "Розгорнути") {
                 this.buttonShowMoreLess.innerText = "Згорнути";
-                console.log(this.contentContainer)
                 this.contentContainer.append(
                     this.ageContainer,
                     this.heartIllnessContainer,
@@ -264,7 +263,6 @@ class VisitCardiologist extends Visit {
                     this.statusContainer
                 );
             } else {
-                console.log(this.contentContainer)
                 this.buttonShowMoreLess.innerText = "Розгорнути";
                 this.ageContainer.remove();
                 this.heartIllnessContainer.remove();
