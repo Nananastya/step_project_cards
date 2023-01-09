@@ -1,4 +1,6 @@
-class Visit {
+
+
+export class Visit {
     constructor(editAction, deleteAction) {
         this.divCard = document.createElement("div");
         this.bttnEdit = document.createElement("button");
@@ -25,7 +27,7 @@ class Visit {
     }
 }
 
-class VisitTherapist extends Visit {
+export class VisitTherapist extends Visit {
     constructor(
         age,
         desc,
@@ -106,7 +108,7 @@ class VisitTherapist extends Visit {
     }
 }
 
-class VisitDentist extends Visit {
+export class VisitDentist extends Visit {
     constructor(
         age,
         desc,
@@ -188,7 +190,7 @@ class VisitDentist extends Visit {
     }
 }
 
-class VisitCardiologist extends Visit {
+export class VisitCardiologist extends Visit {
     constructor(
         age,
         desc,
