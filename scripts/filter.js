@@ -1,10 +1,9 @@
-let filteredArray = [];
-export const container = document.querySelector(".container");
+import {getFromLocalStorage} from "./script.js"
 
-if (JSON.parse(localStorage.getItem("token"))) {
-  document.querySelector(".calllogin")?.remove();
-  getFromLocalStorage();
-}
+let filteredArray = [];
+/* export const container = document.querySelector(".container"); */
+
+
 
 export function filter() {
   document.querySelector(".filtersub").addEventListener("click", () => {

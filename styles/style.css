@@ -127,7 +127,7 @@ span.visit-field-name {
 
 
 
-.modal {
+.my-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -384,4 +384,37 @@ button.card__edit:hover {
 
 .inactive {
   display: none;
+}
+
+
+
+#modalSelectDoctor label {
+  margin-left: 10px;
+}
+
+#modalSelectDoctor input,
+#modalSelectDoctor select{
+  margin: 10px;
+}
+
+#modalCreateCard .modal-body p {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+  margin: 8px;
+  font-size: 17px;
+}
+
+#modalCreateCard .modal-body p span:nth-child(1){
+  color: rgb(70, 70, 70);
+}
+
+#modalCreateCard .modal-body p span:nth-child(2){
+  align-self: flex-end;
+  color: rgb(11, 22, 138);
+}
+
+#modalCreateCard .modal-footer{
+  display: flex;
+  justify-content: space-between;
 }

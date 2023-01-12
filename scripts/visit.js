@@ -1,4 +1,4 @@
-
+import {deleteF} from "./script.js"
 
 export class Visit {
     constructor(editAction, deleteAction) {
@@ -279,7 +279,7 @@ export class VisitCardiologist extends Visit {
     }
 }
 
-new VisitCardiologist(
+/* new VisitCardiologist(
     25,
     'desc',
     'doctor',
@@ -313,21 +313,4 @@ new VisitDentist(
     'edit',
     'deleteF'
 ).render(container);
-
-
-/* new VisitTherapist(
-    age,
-    desc,
-    doctor,
-    fullName,
-    urgency,
-    purpose,
-    statusVisit,
-    heartIllness,
-    id,
-    pressure,
-    weightIndex,
-    lastDateVisit,
-    edit,
-    deleteF
-).render(container); */
+ */
