@@ -23,7 +23,7 @@ export class Visit {
         this.createElem();
         container.append(this.divCard);
         this.bttnDel.addEventListener("click", this.deleteAction?.bind(this));
-        this.bttnEdit.addEventListener("click", this.editAction?.bind(this));
+        // this.bttnEdit.addEventListener("click", this.editAction?.bind(this));
     }
 }
 
@@ -241,7 +241,7 @@ export class VisitCardiologist extends Visit {
         this.fullNameContainer.innerHTML = `<span class="visit-field-name">Ім'я: </span>${this.fullName}`;
         this.urgencyContainer.innerHTML = `<span class="visit-field-name">Терміновість: </span>${this.urgency}`;
         this.purposeContainer.innerHTML = `<span class="visit-field-name">Ціль: </span>${this.purpose}`;
-        this.statusContainer.innerHTML = `<span class="visit-field-name">Статус: </span>${this.status}`;
+        this.statusContainer.innerHTML = `<span class="visit-field-name">Статус: </span>${statusesText[this.status]}`;
         this.heartIllnessContainer.innerHTML = `<span class="visit-field-name">Захворювання серця: </span>${this.heartIllness}`;
         this.pressureContainer.innerHTML = `<span class="visit-field-name">Тиск: </span>${this.pressure}`;
         this.weightIndexContainer.innerHTML = `<span class="visit-field-name">Індекс маси тіла: </span>${this.weightIndex}`;

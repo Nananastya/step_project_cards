@@ -1,301 +1,8 @@
-import {getFromLocalStorage} from "./script.js"
-import {loadAndSetLocalStorage} from "./script.js"
-
-let currentArray = [];
-let newCardObj = {};
-
-/*  class Visit {
-    constructor(editAction, deleteAction) {
-        this.divCard = document.createElement("div");
-        this.bttnEdit = document.createElement("button");
-        this.bttnDel = document.createElement("button");
-        this.editAction = editAction;
-        this.deleteAction = deleteAction;
-        this.contentContainer = document.createElement("div");
-    }
-    createElem() {
-        this.divCard.append(this.bttnEdit);
-        this.divCard.append(this.bttnDel);
-        this.contentContainer.classList.add("card__content-container");
-        this.divCard.append(this.contentContainer);
-        this.divCard.className = "card";
-        this.bttnEdit.className = "card__btn card__edit";
-        this.bttnEdit.innerText = "Змінити";
-        this.bttnDel.className = "card__btn card__delete";
-    }
-    render(container = document.body) {
-        this.createElem();
-        container.append(this.divCard);
-        this.bttnDel.addEventListener("click", this.deleteAction?.bind(this));
-        this.bttnEdit.addEventListener("click", this.editAction?.bind(this));
-    }
-}
-
-class VisitTherapist extends Visit {
-    constructor(
-        age,
-        desc,
-        doctor,
-        fullName,
-        urgency,
-        purpose,
-        status,
-        heartIllness,
-        id,
-        pressure,
-        weightIndex,
-        lastDateVisit,
-        editAction,
-        deleteAction
-    ) {
-        super(editAction, deleteAction);
-        this.age = age;
-        this.desc = desc;
-        this.doctor = doctor;
-        this.fullName = fullName;
-        this.urgency = urgency;
-        this.purpose = purpose;
-        this.status = status;
-        this.heartIllness = heartIllness;
-        this.id = id;
-        this.pressure = pressure;
-        this.weightIndex = weightIndex;
-        this.lastDateVisit = lastDateVisit;
-        this.ageContainer = document.createElement("p");
-        this.descContainer = document.createElement("p");
-        this.doctorContainer = document.createElement("p");
-        this.fullNameContainer = document.createElement("p");
-        this.urgencyContainer = document.createElement("p");
-        this.purposeContainer = document.createElement("p");
-        this.statusContainer = document.createElement("p");
-        this.heartIllnessContainer = document.createElement("p");
-        this.pressureContainer = document.createElement("p");
-        this.weightIndexContainer = document.createElement("p");
-        this.lastDateVisitContainer = document.createElement("p");
-        this.buttonShowMoreLess = document.createElement("button");
-    }
-    createElem() {
-        super.createElem();
-        this.ageContainer.innerHTML = `<span class="visit-field-name">Вік: </span>${this.age}`;
-        this.descContainer.innerHTML = `<span class="visit-field-name">Опис візіиту: </span>${this.desc}`;
-        this.doctorContainer.innerHTML = `<span class="visit-field-name">Лікар: </span>${this.doctor}`;
-        this.fullNameContainer.innerHTML = `<span class="visit-field-name">Ім'я: </span>${this.fullName}`;
-        this.urgencyContainer.innerHTML = `<span class="visit-field-name">Терміновість: </span>${this.urgency}`;
-        this.purposeContainer.innerHTML = `<span class="visit-field-name">Ціль візиту: </span>${this.purpose}`;
-        this.statusContainer.innerHTML = `<span class="visit-field-name">Статус: </span>${this.status}`;
-        this.buttonShowMoreLess.innerText = "Розгорнути";
-        this.contentContainer.append(
-            this.fullNameContainer,
-            this.doctorContainer,
-            this.buttonShowMoreLess
-        );
-
-        this.buttonShowMoreLess.addEventListener("click", () => {
-            if (this.buttonShowMoreLess.innerText === "Розгорнути") {
-                this.buttonShowMoreLess.innerText = "Згорнути";
-                this.contentContainer.append(
-                    this.ageContainer,
-                    this.descContainer,
-                    this.urgencyContainer,
-                    this.purposeContainer,
-                    this.statusContainer
-                );
-            } else {
-                this.buttonShowMoreLess.innerText = "Розгорнути";
-                this.ageContainer.remove();
-                this.descContainer.remove();
-                this.urgencyContainer.remove();
-                this.purposeContainer.remove();
-                this.statusContainer.remove();
-            }
-        });
-    }
-}
-
-class VisitDentist extends Visit {
-    constructor(
-        age,
-        desc,
-        doctor,
-        fullName,
-        urgency,
-        purpose,
-        status,
-        heartIllness,
-        id,
-        pressure,
-        weightIndex,
-        lastDateVisit,
-        editAction,
-        deleteAction
-    ) {
-        super(editAction, deleteAction);
-        this.age = age;
-        this.desc = desc;
-        this.doctor = doctor;
-        this.fullName = fullName;
-        this.urgency = urgency;
-        this.purpose = purpose;
-        this.status = status;
-        this.heartIllness = heartIllness;
-        this.id = id;
-        this.pressure = pressure;
-        this.weightIndex = weightIndex;
-        this.lastDateVisit = lastDateVisit;
-        this.ageContainer = document.createElement("p");
-        this.descContainer = document.createElement("p");
-        this.doctorContainer = document.createElement("p");
-        this.fullNameContainer = document.createElement("p");
-        this.urgencyContainer = document.createElement("p");
-        this.purposeContainer = document.createElement("p");
-        this.statusContainer = document.createElement("p");
-        this.heartIllnessContainer = document.createElement("p");
-        this.pressureContainer = document.createElement("p");
-        this.weightIndexContainer = document.createElement("p");
-        this.lastDateVisitContainer = document.createElement("p");
-        this.buttonShowMoreLess = document.createElement("button");
-    }
-    createElem() {
-        super.createElem();
-
-        this.descContainer.innerHTML = `<span class="visit-field-name">Опис візиту: </span>${this.desc}`;
-        this.doctorContainer.innerHTML = `<span class="visit-field-name">Лікар: </span>${this.doctor}`;
-        this.fullNameContainer.innerHTML = `<span class="visit-field-name">Ім'я: </span>${this.fullName}`;
-        this.urgencyContainer.innerHTML = `<span class="visit-field-name">Терміновість: </span>${this.urgency}`;
-        this.purposeContainer.innerHTML = `<span class="visit-field-name">Ціль візиту: </span>${this.purpose}`;
-        this.statusContainer.innerHTML = `<span class="visit-field-name">Статус: </span>${this.status}`;
-        this.buttonShowMoreLess.innerText = "Розгорнути";
-        this.lastDateVisitContainer.innerHTML = `<span class="visit-field-name">Останній візит: </span>${this.lastDateVisit}`;
-        this.contentContainer.append(
-            this.fullNameContainer,
-            this.doctorContainer,
-            this.buttonShowMoreLess
-        );
-        this.buttonShowMoreLess.addEventListener("click", () => {
-            if (this.buttonShowMoreLess.innerText === "Розгорнути") {
-                this.buttonShowMoreLess.innerText = "Згорнути";
-                this.contentContainer.append(
-                    this.lastDateVisitContainer,
-                    this.descContainer,
-                    this.urgencyContainer,
-                    this.purposeContainer,
-                    this.statusContainer
-                );
-            } else {
-                this.buttonShowMoreLess.innerText = "Розгорнути";
-                this.lastDateVisitContainer.remove();
-                this.lastDateVisitContainer.remove();
-                this.descContainer.remove();
-                this.urgencyContainer.remove();
-                this.purposeContainer.remove();
-                this.statusContainer.remove();
-            }
-        });
-    }
-}
-
-class VisitCardiologist extends Visit {
-    constructor(
-        age,
-        desc,
-        doctor,
-        fullName,
-        urgency,
-        purpose,
-        status,
-        heartIllness,
-        id,
-        pressure,
-        weightIndex,
-        lastDateVisit,
-        editAction,
-        deleteAction
-    ) {
-        super(editAction, deleteAction);
-        this.age = age;
-        this.desc = desc;
-        this.doctor = doctor;
-        this.fullName = fullName;
-        this.urgency = urgency;
-        this.purpose = purpose;
-        this.status = status;
-        this.heartIllness = heartIllness;
-        this.id = id;
-        this.pressure = pressure;
-        this.weightIndex = weightIndex;
-        this.lastDateVisit = lastDateVisit;
-        this.ageContainer = document.createElement("p");
-        this.descContainer = document.createElement("p");
-        this.doctorContainer = document.createElement("p");
-        this.fullNameContainer = document.createElement("p");
-        this.urgencyContainer = document.createElement("p");
-        this.purposeContainer = document.createElement("p");
-        this.statusContainer = document.createElement("p");
-        this.heartIllnessContainer = document.createElement("p");
-        this.pressureContainer = document.createElement("p");
-        this.weightIndexContainer = document.createElement("p");
-        this.lastDateVisitContainer = document.createElement("p");
-        this.buttonShowMoreLess = document.createElement("button");
-    }
-    createElem() {
-        super.createElem();
-        this.ageContainer.innerHTML = `<span class="visit-field-name">Вік: </span>${this.age}`;
-        this.descContainer.innerHTML = `<span class="visit-field-name">Опис візиту: </span>${this.desc}`;
-        this.doctorContainer.innerHTML = `<span class="visit-field-name">Лікар: </span>${this.doctor}`;
-        this.fullNameContainer.innerHTML = `<span class="visit-field-name">Ім'я: </span>${this.fullName}`;
-        this.urgencyContainer.innerHTML = `<span class="visit-field-name">Терміновість: </span>${this.urgency}`;
-        this.purposeContainer.innerHTML = `<span class="visit-field-name">Ціль: </span>${this.purpose}`;
-        this.statusContainer.innerHTML = `<span class="visit-field-name">Статус: </span>${this.status}`;
-        this.heartIllnessContainer.innerHTML = `<span class="visit-field-name">Захворювання серця: </span>${this.heartIllness}`;
-        this.pressureContainer.innerHTML = `<span class="visit-field-name">Тиск: </span>${this.pressure}`;
-        this.weightIndexContainer.innerHTML = `<span class="visit-field-name">Індекс маси тіла: </span>${this.weightIndex}`;
-        this.buttonShowMoreLess.innerText = "Розгорнути";
-        this.contentContainer.append(
-            this.fullNameContainer,
-            this.doctorContainer,
-            this.buttonShowMoreLess
-        );
-        this.buttonShowMoreLess.addEventListener("click", () => {
-            if (this.buttonShowMoreLess.innerText === "Розгорнути") {
-                this.buttonShowMoreLess.innerText = "Згорнути";
-                this.contentContainer.append(
-                    this.ageContainer,
-                    this.heartIllnessContainer,
-                    this.pressureContainer,
-                    this.weightIndexContainer,
-                    this.descContainer,
-                    this.urgencyContainer,
-                    this.purposeContainer,
-                    this.statusContainer
-                );
-            } else {
-                this.buttonShowMoreLess.innerText = "Розгорнути";
-                this.ageContainer.remove();
-                this.heartIllnessContainer.remove();
-                this.pressureContainer.remove();
-                this.weightIndexContainer.remove();
-                this.descContainer.remove();
-                this.urgencyContainer.remove();
-                this.purposeContainer.remove();
-                this.statusContainer.remove();
-            }
-        });
-    }
-} */
-
-import {VisitTherapist, VisitDentist, VisitCardiologist} from "./visit.js";
-
-let buttonCreateVisit = document.querySelector('.callmodal');
-let modalSelect = document.querySelector('#modalSelectDoctor .modal-body select');
-let modalBodySelectDoctor = document.querySelector('#modalSelectDoctor .modal-body');
-let modalDiv = document.querySelector('#modalSelectDoctor .modal-body div');
-let inputs = modalDiv.getElementsByTagName("input");
-let goToSecondModal = document.querySelector('#modalSelectDoctor .btn-primary');
-let modalBodyCard = document.querySelector('#modalCreateCard .modal-body');
-let openFirstModal = document.querySelector('#modalSelectDoctor .btn-primary');
-let btnCreateCard = document.querySelector('#modalCreateCard .create-card');
-export let token = '7bb6bb97-4329-4af5-9071-945564d78e25';
-
+import {renderItems}                                        from "./script.js"
+import {getDataFromLS, setDataToLS}                         from "./utils.js"
+import {loadAndSetLocalStorage}                             from "./script.js"
+import {deleteF}                                            from "./script.js"
+import {VisitTherapist, VisitDentist, VisitCardiologist}    from "./visit.js";
 
 export class Modal {
   constructor() {
@@ -309,11 +16,37 @@ export class Modal {
     this.inputIndexValue = "";
     this.inputIlnessesValue = "";
     this.inputLastVisitValue = "";
+
+    this._modalDiv = document.querySelector('#modalSelectDoctor .modal-body div');
+    this._inputs = this._modalDiv?.getElementsByTagName("input");
+    this._modalSelect = document.querySelector('#modalSelectDoctor .modal-body select');
+    this._goToSecondModal = document.querySelector('#modalSelectDoctor .btn-primary');
+    this._modalBodyCard = document.querySelector('#modalCreateCard .modal-body');
+    this._btnCreateCard = document.querySelector('#modalCreateCard .create-card');
+
+    this._modalSelect?.addEventListener("change", () => {
+      this.chooseDoctor();
+      this.check();
+    });
+
+    this._goToSecondModal?.addEventListener("click", () => {
+       this.createCard();
+    })
+
+    this._btnCreateCard?.addEventListener("click", () => {
+      this.postGet();
+      loadAndSetLocalStorage();
+      renderItems();
+
+      this._goToSecondModal.disabled = true;
+      this._modalDiv.innerHTML = "";
+    })
   }
+
   chooseDoctor(){
-    goToSecondModal.disabled = true;
-    modalDiv.innerHTML = "";
-      modalDiv.innerHTML += 
+    this._goToSecondModal.disabled = true;
+    this._modalDiv.innerHTML = "";
+      this._modalDiv.innerHTML +=
         `<label>Ціль візиту:</label></br>
         <input placeholder="Ціль візиту..." class="aim"></input></br>
         <select class="status">
@@ -332,13 +65,15 @@ export class Modal {
         </select></br>
         <label>ПІБ:</label></br>
         <input placeholder="ПІБ" class="name"></input></br>`;
-      if(modalSelect.value === "Therapist"){
-        modalDiv.innerHTML +=
+
+      if(this._modalSelect.value === "Therapist"){
+        this._modalDiv.innerHTML +=
         `</br><label>Вік:</label></br>
         <input placeholder="Вік..." class="age"></input></br>`;
       }
-      else if (modalSelect.value === "Cardiologist"){
-        modalDiv.innerHTML +=
+
+      if (this._modalSelect.value === "Cardiologist"){
+        this._modalDiv.innerHTML +=
         `<label>Звичайний тиск:</label></br>
         <input placeholder="Звичайний тиск..." class="pressure"></input></br>
         <label>Індекс маси тіла:</label></br>
@@ -348,182 +83,125 @@ export class Modal {
         <label>Вік:</label></br>
         <input placeholder="Вік..." class="age"></input></br>`;
       }
-      else if (modalSelect.value === "Dentist"){
-        modalDiv.innerHTML +=
+
+      if (this._modalSelect.value === "Dentist"){
+        this._modalDiv.innerHTML +=
           `<label>Дата останнього візиту:</label></br>
           <input placeholder="Дата останнього візиту..." class="last-visit"></input></br>`;
       }
-      
+
   }
 
   isNotEmpty(element){
-    if (element.value === '' || element.value === ' ') {
+    if (element.value.trim() === '') {
       return false;
     }
-    else return true;
+
+    return true;
   }
 
   check(){
-    for(let el of inputs){
+    for(let el of this._inputs){
       el.addEventListener("input", () => {
-        if([...inputs].every(this.isNotEmpty)){
-          goToSecondModal.disabled = false;
-          this.inputAimValue = modalDiv.querySelector(".aim").value;
-          let selectStatusValueAttribute = modalDiv.querySelector(".status").value;
-          this.selectStatusValue = modalDiv.querySelector(`option[value="${selectStatusValueAttribute}"]`).textContent;
-          this.inputDescriptionValue = modalDiv.querySelector(".description").value;
-          let selectUrgencyValueAttribute = modalDiv.querySelector(".urgency").value;
-          this.selectUrgencyValue = modalDiv.querySelector(`option[value="${selectUrgencyValueAttribute}"]`).textContent;
-          this.inputNameValue = modalDiv.querySelector(".name").value;
-          if(modalSelect.value === "Therapist"){
-            this.inputAgeValue = modalDiv.querySelector(".age").value;
+        if([...this._inputs].every(this.isNotEmpty)){
+          this._goToSecondModal.disabled = false;
+          this.inputAimValue = this._modalDiv.querySelector(".aim").value;
+          let selectStatusValueAttribute = this._modalDiv.querySelector(".status").value;
+          this.selectStatusValue = this._modalDiv.querySelector(`option[value="${selectStatusValueAttribute}"]`).textContent;
+          this.inputDescriptionValue = this._modalDiv.querySelector(".description").value;
+          let selectUrgencyValueAttribute = this._modalDiv.querySelector(".urgency").value;
+          this.selectUrgencyValue = this._modalDiv.querySelector(`option[value="${selectUrgencyValueAttribute}"]`).textContent;
+          this.inputNameValue = this._modalDiv.querySelector(".name").value;
+          if(this._modalSelect.value === "Therapist"){
+            this.inputAgeValue = this._modalDiv.querySelector(".age").value;
           }
-          else if(modalSelect.value === "Cardiologist"){
-            this.inputAgeValue = modalDiv.querySelector(".age").value;
-            this.inputPressureValue = modalDiv.querySelector(".pressure").value;
-            this.inputIndexValue = modalDiv.querySelector(".index").value;
-            this.inputIlnessesValue = modalDiv.querySelector(".ilnesses").value;
+          else if(this._modalSelect.value === "Cardiologist"){
+            this.inputAgeValue = this._modalDiv.querySelector(".age").value;
+            this.inputPressureValue = this._modalDiv.querySelector(".pressure").value;
+            this.inputIndexValue = this._modalDiv.querySelector(".index").value;
+            this.inputIlnessesValue = this._modalDiv.querySelector(".ilnesses").value;
           }
-          else if(modalSelect.value === "Dentist"){
-            this.inputLastVisitValue = modalDiv.querySelector(".last-visit").value;
+          else if(this._modalSelect.value === "Dentist"){
+            this.inputLastVisitValue = this._modalDiv.querySelector(".last-visit").value;
           }
         }
         else{
-          goToSecondModal.disabled = true;
+          this._goToSecondModal.disabled = true;
         }
       })
     }
   }
   createCard(){
-    modalBodyCard.innerHTML = "";
-    modalBodyCard.innerHTML += 
+    this._modalBodyCard.innerHTML = "";
+    this._modalBodyCard.innerHTML +=
       `<p><span>Ціль візиту: </span><span>${this.inputAimValue}</span></p>
       <p><span>Короткий опис візиту: </span><span>${this.inputDescriptionValue}</span><p>
       <p><span>Статус: </span><span>${this.selectStatusValue}</span></p>
       <p><span>Терміновість: </span><span>${this.selectUrgencyValue}</span></p>
       <p><span>ПІБ: </span><span>${this.inputNameValue}</span></p>`;
-    if(modalSelect.value === "Therapist"){
-      modalBodyCard.innerHTML += `<p><span>Вік: </span><span>${this.inputAgeValue}</span></p>`;
+    if(this._modalSelect.value === "Therapist"){
+      this._modalBodyCard.innerHTML += `<p><span>Вік: </span><span>${this.inputAgeValue}</span></p>`;
     }
-    else if(modalSelect.value === "Cardiologist"){
-      modalBodyCard.innerHTML += 
+    else if(this._modalSelect.value === "Cardiologist"){
+      this._modalBodyCard.innerHTML +=
       `<p><span>Звичайний тиск: </span><span>${this.inputPressureValue}</span></p>
       <p><span>Індекс маси тіла: </span><span>${this.inputIndexValue}</span><p>
       <p><span>Перенесені захворювання серцево-судинної системи: </span><span>${this.inputIlnessesValue}</span></p>
       <p><span>Вік: </span><span>${this.inputAgeValue}</span></p>`;
     }
-    else if(modalSelect.value === "Dentist"){
-      modalBodyCard.innerHTML += `<p><span>Дата останнього візиту: </span><span>${this.inputLastVisitValue}</span></p>`;
+    else if(this._modalSelect.value === "Dentist"){
+      this._modalBodyCard.innerHTML += `<p><span>Дата останнього візиту: </span><span>${this.inputLastVisitValue}</span></p>`;
     }
   }
   postGet(){
-    /* console.log(modalSelect.value); */
-    if(modalSelect.value === "Therapist"){
-        fetch("https://ajax.test-danit.com/api/v2/cards", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`
-        },
-        body: JSON.stringify({
-            purpose: `${this.inputAimValue}`,
-            description: `${this.inputDescriptionValue}`,
-            doctor: 'Therapist',
-            status: `${this.selectStatusValue}`,
-            urgency: `${this.selectUrgencyValue}`,
-            fullName: `${this.inputNameValue}`,
-            age: `${this.inputAgeValue}`,
-        })
-        })
-        .then(response => response.json())
-        /* .then(response => console.log(response)) */
-        .then((response) => {
-          currentArray = JSON.parse(localStorage.getItem("array"));
-          if (response.id) {
-              newCardObj.id = response.id;
-              currentArray = [...currentArray, ...[newCardObj]];
-              localStorage.setItem("array", JSON.stringify(currentArray));
-              document.querySelectorAll(".card").forEach((el) => el.remove());
-              getFromLocalStorage();
-          } else {
-              throw new Error();
-          }
-      })
+    const data = {
+        doctor        : this._modalSelect.value,
+        purpose       : `${this.inputAimValue}`,
+        description   : `${this.inputDescriptionValue}`,
+        status        : `${this.selectStatusValue}`,
+        urgency       : `${this.selectUrgencyValue}`,
+        fullName      : `${this.inputNameValue}`,
+        age           : `${this.inputAgeValue}`,
     }
-    else if (modalSelect.value === "Cardiologist"){
-        fetch("https://ajax.test-danit.com/api/v2/cards", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`
-            },
-            body: JSON.stringify({
-                purpose: `${this.inputAimValue}`,
-                description: `${this.inputDescriptionValue}`,
-                doctor: 'Cardiologist',
-                status: `${this.selectStatusValue}`,
-                urgency: `${this.selectUrgencyValue}`,
-                fullName: `${this.inputNameValue}`,
-                pressure: `${this.inputPressureValue}`,
-                weightIndex: `${this.inputIndexValue}`,
-                heartIllness: `${this.inputIlnessesValue}`,
-                age: `${this.inputAgeValue}`
-            })
-        })
-        .then(response => response.json())
-        /* .then(response => console.log(response)) */
-        .then((response) => {
-          currentArray = JSON.parse(localStorage.getItem("array"));
-          if (response.id) {
-              newCardObj.id = response.id;
-              currentArray = [...currentArray, ...[newCardObj]];
-              localStorage.setItem("array", JSON.stringify(currentArray));
-              document.querySelectorAll(".card").forEach((el) => el.remove());
-              getFromLocalStorage();
-          } else {
-              throw new Error();
-          }
-      })
+
+    if (this._modalSelect.value === "Cardiologist") {
+      data.pressure = `${this.inputPressureValue}`
+      data.weightIndex = `${this.inputIndexValue}`
+      data.heartIllness = `${this.inputIlnessesValue}`
     }
-    else if (modalSelect.value === "Dentist"){
-        fetch("https://ajax.test-danit.com/api/v2/cards", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`
-        },
-        body: JSON.stringify({
-            purpose: `${this.inputAimValue}`,
-            description: `${this.inputDescriptionValue}`,
-            doctor: 'Dentist',
-            status: `${this.selectStatusValue}`,
-            urgency: `${this.selectUrgencyValue}`,
-            fullName: `${this.inputNameValue}`,
-            lastDateVisit: `${this.inputLastVisitValue}`,
-        })
-        })
-        .then(response => response.json())
-        /* .then(response => console.log(response)) */
-        .then((response) => {
-          currentArray = JSON.parse(localStorage.getItem("array"));
-          if (response.id) {
-              newCardObj.id = response.id;
-              currentArray = [...currentArray, ...[newCardObj]];
-              localStorage.setItem("array", JSON.stringify(currentArray));
-              document.querySelectorAll(".card").forEach((el) => el.remove());
-              getFromLocalStorage();
-          } else {
-              throw new Error();
-          }
-      })
+
+    if (this._modalSelect.value === "Dentist") {
+      data.lastDateVisit = `${this.inputLastVisitValue}`
+
+      delete data.age
     }
+
+    fetch("https://ajax.test-danit.com/api/v2/cards", {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${getDataFromLS('token')}`
+      },
+      body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then((response) => {
+        if (response.id) {
+          const currentArray = [ ...getDataFromLS("array") || [], response];
+
+          setDataToLS("array", currentArray)
+          renderItems();
+        } else {
+            throw new Error();
+        }
+    })
   }
   getCardById(id){
     fetch(`https://ajax.test-danit.com/api/v2/cards/${id}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`
+            'Authorization': `Bearer ${getDataFromLS('token')}`
         },
         }).then(response => response.json())
             .then(r => {
@@ -542,6 +220,7 @@ export class Modal {
                             "",
                             "",
                             "",
+                            deleteF,
                             ""
                         ).render(container);
                 }
@@ -560,7 +239,9 @@ export class Modal {
                         r.weightIndex,
                         "",
                         "",
+                        deleteF,
                         ""
+
                     ).render(container);
                 }
                 else if (r.doctor === "Dentist"){
@@ -578,37 +259,22 @@ export class Modal {
                         "",
                         r.lastDateVisit,
                         "",
+                        deleteF,
                         ""
                     ).render(container);
                 }
             })
   }
   getCards(){
-    let cardsAmount;
     fetch("https://ajax.test-danit.com/api/v2/cards", {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token"))}`
+        'Authorization': `Bearer ${getDataFromLS('token')}`
       },
     })
       .then(response => response.json())
       .then(response => {
-        console.log(response);
-        console.log(response.length);
-        cardsAmount = response.length;
-        
-        if (response.length === 0) {
-          document.querySelector('.container').style.display = 'block';
-          document
-              .querySelector(".container")
-              .insertAdjacentHTML(
-                  "afterbegin",
-                  `<p class="nocardsinfo">Картки відсутні</p>`
-              );
-        } else {
-          document.querySelector('.container').style.display = 'grid';
-        }
         for(let i = 0; i < response.length; i++){
           this.getCardById(response[i].id);
         }
@@ -619,101 +285,8 @@ export class Modal {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${getDataFromLS('token')}`
       },
     })
   }
 }
-
-let userModal = new Modal();
-goToSecondModal.disabled = true;
-// for(let i = 0; i < )
-/* userModal.deleteCard(
-  142207); */
-userModal.getCards();
-// console.log(arr.length);
-// userModal.getCardById(141890);
-modalSelect.addEventListener("change", () => {
-  userModal.chooseDoctor();
-  userModal.check();
-});
-
-goToSecondModal.addEventListener("click", () => {
-  userModal.createCard();
-})
-
-btnCreateCard.addEventListener("click", () => {
-  userModal.postGet();
-  loadAndSetLocalStorage();
-  getFromLocalStorage();
- 
-  goToSecondModal.disabled = true;
-  modalDiv.innerHTML = "";
-  location.reload();
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* new VisitCardiologist(
-    25,
-    'desc',
-    'doctor',
-    'fullName',
-    'urgency',
-    'purpose',
-    'statusVisit',
-    'heartIllness',
-    'id',
-    'pressure',
-    'weightIndex',
-    'lastDateVisit',
-    'edit',
-    'deleteF'
-).render(container);
- */
-
-// new VisitDentist(
-//     'age',
-//     'desc',
-//     'doctor',
-//     'fullName',
-//     'urgency',
-//     'purpose',
-//     'statusVisit',
-//     'heartIllness',
-//     'id',
-//     'pressure',
-//     'weightIndex',
-//     'lastDateVisit',
-//     'edit',
-//     'deleteF'
-// ).render(container);
-
-
-/* new VisitTherapist(
-    age,
-    desc,
-    doctor,
-    fullName,
-    urgency,
-    purpose,
-    statusVisit,
-    heartIllness,
-    id,
-    pressure,
-    weightIndex,
-    lastDateVisit,
-    edit,
-    deleteF
-).render(container); */

@@ -1,40 +1,25 @@
-import {getFromLocalStorage} from "./script.js"
+import { findValueInData, getDataFromLS, getValueFromElement } from './utils.js';
 
-let filteredArray = [];
-/* export const container = document.querySelector(".container"); */
-
-
-
-export function filter() {
+export function filter(renderItems) {
   document.querySelector(".filtersub").addEventListener("click", () => {
-    document.querySelector(".nocardsinfo")?.remove();
-    filteredArray = JSON.parse(localStorage.getItem("array")).filter(
-        ({ doctor, fullName, desc, purpose, status, urgency }) => {
-          const searchValue = getValueFromElement('#search')?.toLowerCase()
-          return (
-            findValueInData(doctor, searchValue) ||
-            findValueInData(fullName, searchValue) ||
-            findValueInData(desc, searchValue) ||
-            findValueInData(purpose, searchValue) &&
-            findValueInData(status, getValueFromElement('#filterStatus')) &&
-            findValueInData(urgency, document.querySelector("#filterUrgency").value)
-          )
-  
-        }
-    );
-    document.querySelectorAll(".card").forEach((el) => el.remove());
-    getFromLocalStorage(filteredArray);
+    const filteredArray = getDataFromLS("array").filter(
+      ({ doctor, fullName, description, purpose, status, urgency }) => {
+          const searchValue = getValueFromElement('#search')
+          const statusValue = getValueFromElement('#filterStatus')
+          const urgencyValue = getValueFromElement("#filterUrgency")
+
+
+          const hasSearch = findValueInData(doctor, searchValue) ||
+                            findValueInData(fullName, searchValue) ||
+                            findValueInData(description, searchValue) ||
+                            findValueInData(purpose, searchValue)
+
+          const hasStatus = findValueInData(status, statusValue)
+          const hasUrgency = findValueInData(urgency, urgencyValue)
+
+          return hasSearch && hasStatus && hasUrgency
+      });
+
+    renderItems(filteredArray);
   })
-  
-
-}
-
-
-const findValueInData = (primary, inserted) => {
-  return primary?.toLowerCase()?.includes(inserted)
-}
-
-const getValueFromElement = (selector) => {
-
-  return document.querySelector(selector).value || ''
 }
