@@ -6,7 +6,6 @@ import {Modal} from "./modal.js"
 const baseUrl = "https://ajax.test-danit.com/api/v2/cards"
 let currentArray = [];
 
-
 class LoginModal {
     constructor(confirmL) {
         this._modalElement = document.createElement("div");
@@ -73,7 +72,7 @@ document.querySelector(".calllogin")?.addEventListener("click", () => {
 });
 
 
-const loadAndSetLocalStorage = function () {
+export const loadAndSetLocalStorage = function () {
     fetch(`${baseUrl}`, {
         method: "GET",
         headers: {
@@ -114,30 +113,9 @@ const confirmL = function (inputLogin, inputPassWord) {
         })
 }
 
-export function deleteF() {
-    fetch(`${baseUrl}/${this.id}`, {
-        method: "DELETE",
-        headers: {
-            Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-        },
-    })
-        .then((response) => {
-            currentArray = JSON.parse(localStorage.getItem("array"));
-            if (response.ok) {
-                currentArray.splice(
-                    currentArray.indexOf(currentArray.find((el) => el.id === this.id)),
-                    1
-                );
-                localStorage.setItem("array", JSON.stringify(currentArray));
-                document.querySelectorAll(".card").forEach((el) => el.remove());
-                getFromLocalStorage();
-            } else {
-                throw new Error();
-            }
-        })
-}
 
-
+/* let deleteBtn = document.querySelector('.card__delete')
+deleteBtn.addEventListener('click', deleteF()) */
 
 export const getFromLocalStorage = function (
     array = JSON.parse(localStorage.getItem("array"))
@@ -158,27 +136,8 @@ export const getFromLocalStorage = function (
         document.querySelector(".callmodal")?.addEventListener("click", () => {
         /* new LoginModal().render(); */
     });
-    console.log(array.length)
-    if (array.length === 0) {
-        if (document.querySelector(".filtersub").innerText === "FILTER") {
-            document.querySelector('.container').style.display = 'grid';
-            document
-                .querySelector(".container")
-                .insertAdjacentHTML(
-                    "afterbegin",
-                    `<p class="nocardsinfo">Картки відсутні</p>`
-                );
-        } else {
-            document.querySelector('.container').style.display = 'block';
-            document
-                .querySelector(".container")
-                .insertAdjacentHTML(
-                    "afterbegin",
-                    `<p class="nocardsinfo">Картки відсутні</p>`
-                );
-        }
-    } else {
-        document.querySelector(".nocardsinfo")?.remove();
+    
+
 
         array.forEach(
             ({
@@ -209,7 +168,7 @@ export const getFromLocalStorage = function (
                         pressure,
                         weightIndex,
                         lastDateVisit,
-/*                         edit, */
+
                         deleteF
                     ).render(container);
                 } else if (doctor === "Dentist") {
@@ -226,7 +185,7 @@ export const getFromLocalStorage = function (
                         pressure,
                         weightIndex,
                         lastDateVisit,
-/*                         edit, */
+
                         deleteF
                     ).render(container);
                 } else if (doctor === "Therapist") {
@@ -243,14 +202,14 @@ export const getFromLocalStorage = function (
                         pressure,
                         weightIndex,
                         lastDateVisit,
-/*                         edit, */
+
                         deleteF
                     ).render(container);
                 }
             }
-        );
+        )
     }
-};
+
 
 if (JSON.parse(localStorage.getItem("token"))) {
     document.querySelector(".calllogin")?.remove();
@@ -261,10 +220,36 @@ filter();
 
 
 
+export function deleteF() {
+    fetch(`${baseUrl}/${this.id}`, {
+        method: "DELETE",
+        headers: {
+            Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        },
+    })
+        .then((response) => {
+            currentArray = JSON.parse(localStorage.getItem("array"));
+            if (response.ok) {
+                currentArray.splice(
+                    currentArray.indexOf(currentArray.find((el) => el.id === this.id)),
+                    1
+                );
+                localStorage.setItem("array", JSON.stringify(currentArray));
+                document.querySelectorAll(".card").forEach((el) => el.remove());
+                getFromLocalStorage();
+            } else {
+                throw new Error();
+            }
+        })
+}
 
+const del = document.querySelectorAll('.card__button');
+console.log(del)
+del.addEventListener('click', () => alert('hi'))
 
-
-
+/* 
+deleteF()
+ */
 
 
 

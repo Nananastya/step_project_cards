@@ -1,4 +1,8 @@
-/* import {loadAndSetLocalStorage} from "./script.js" */
+import {getFromLocalStorage} from "./script.js"
+import {loadAndSetLocalStorage} from "./script.js"
+
+let currentArray = [];
+let newCardObj = {};
 
 /*  class Visit {
     constructor(editAction, deleteAction) {
@@ -413,7 +417,7 @@ export class Modal {
     }
   }
   postGet(){
-    console.log(modalSelect.value);
+    /* console.log(modalSelect.value); */
     if(modalSelect.value === "Therapist"){
         fetch("https://ajax.test-danit.com/api/v2/cards", {
         method: 'POST',
@@ -432,7 +436,19 @@ export class Modal {
         })
         })
         .then(response => response.json())
-        .then(response => console.log(response))
+        /* .then(response => console.log(response)) */
+        .then((response) => {
+          currentArray = JSON.parse(localStorage.getItem("array"));
+          if (response.id) {
+              newCardObj.id = response.id;
+              currentArray = [...currentArray, ...[newCardObj]];
+              localStorage.setItem("array", JSON.stringify(currentArray));
+              document.querySelectorAll(".card").forEach((el) => el.remove());
+              getFromLocalStorage();
+          } else {
+              throw new Error();
+          }
+      })
     }
     else if (modalSelect.value === "Cardiologist"){
         fetch("https://ajax.test-danit.com/api/v2/cards", {
@@ -455,7 +471,19 @@ export class Modal {
             })
         })
         .then(response => response.json())
-        .then(response => console.log(response))
+        /* .then(response => console.log(response)) */
+        .then((response) => {
+          currentArray = JSON.parse(localStorage.getItem("array"));
+          if (response.id) {
+              newCardObj.id = response.id;
+              currentArray = [...currentArray, ...[newCardObj]];
+              localStorage.setItem("array", JSON.stringify(currentArray));
+              document.querySelectorAll(".card").forEach((el) => el.remove());
+              getFromLocalStorage();
+          } else {
+              throw new Error();
+          }
+      })
     }
     else if (modalSelect.value === "Dentist"){
         fetch("https://ajax.test-danit.com/api/v2/cards", {
@@ -475,7 +503,19 @@ export class Modal {
         })
         })
         .then(response => response.json())
-        .then(response => console.log(response))
+        /* .then(response => console.log(response)) */
+        .then((response) => {
+          currentArray = JSON.parse(localStorage.getItem("array"));
+          if (response.id) {
+              newCardObj.id = response.id;
+              currentArray = [...currentArray, ...[newCardObj]];
+              localStorage.setItem("array", JSON.stringify(currentArray));
+              document.querySelectorAll(".card").forEach((el) => el.remove());
+              getFromLocalStorage();
+          } else {
+              throw new Error();
+          }
+      })
     }
   }
   getCardById(id){
@@ -555,11 +595,24 @@ export class Modal {
       .then(response => response.json())
       .then(response => {
         console.log(response);
+        console.log(response.length);
         cardsAmount = response.length;
+        
+        if (response.length === 0) {
+          document.querySelector('.container').style.display = 'block';
+          document
+              .querySelector(".container")
+              .insertAdjacentHTML(
+                  "afterbegin",
+                  `<p class="nocardsinfo">Картки відсутні</p>`
+              );
+        } else {
+          document.querySelector('.container').style.display = 'grid';
+        }
         for(let i = 0; i < response.length; i++){
           this.getCardById(response[i].id);
         }
-      })
+  })
   }
   deleteCard(id){
     fetch(`https://ajax.test-danit.com/api/v2/cards/${id}`, {
@@ -575,7 +628,8 @@ export class Modal {
 let userModal = new Modal();
 goToSecondModal.disabled = true;
 // for(let i = 0; i < )
-/* userModal.deleteCard(142130); */
+/* userModal.deleteCard(
+  142207); */
 userModal.getCards();
 // console.log(arr.length);
 // userModal.getCardById(141890);
@@ -590,10 +644,12 @@ goToSecondModal.addEventListener("click", () => {
 
 btnCreateCard.addEventListener("click", () => {
   userModal.postGet();
-  /* getFromLocalStorage(); */
   loadAndSetLocalStorage();
+  getFromLocalStorage();
+ 
   goToSecondModal.disabled = true;
   modalDiv.innerHTML = "";
+  location.reload();
 })
 
 
