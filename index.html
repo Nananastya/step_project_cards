@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles/reset.css"/>
-    <link rel="stylesheet" href="./styles/style.css"/>
-    <title>Document</title>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="./styles/reset.css" />
+  <link rel="stylesheet" href="./styles/style.css" />
+
+  <title>Document</title>
 </head>
+
 <body>
-  
-    <!-- ХЕДЕР -->
+
+  <!-- ХЕДЕР -->
 
   <header id="header" class="header">
 
@@ -18,14 +23,20 @@
       <a href="#" class="logo__text-link">
         <p class="logo__text">
           <span class="logo__text-marked">КЛІНІКА</span><br>ДОБРОДІЯ
-        </p></a>
+        </p>
+      </a>
       <a href="#" class="logo__image-link">
-        
-        <img class="logo__image" src="./Images/logo-health-care-medicine-hospital-png-favpng-vpNeqNpwpZuz9WevASB3A27ZS.jpg" alt="logo"></a>
+
+        <img class="logo__image"
+          src="./Images/logo-health-care-medicine-hospital-png-favpng-vpNeqNpwpZuz9WevASB3A27ZS.jpg" alt="logo"></a>
     </div>
 
-    <button class="calllogin inactive" type="button">Увійти</button>
-    <button class="callmodal" type="button">Створити візит</button>        
+    <button class="calllogin " type="button">Увійти</button>
+    <!--     <button class="callmodal inactive" type="button">Створити візит</button> -->
+
+    <!--     <button type="button" class="btn btn-primary callmodal inactive" data-bs-toggle="modal" data-bs-target="#modalSelectDoctor">
+      Створити візит
+    </button> -->
 
   </header>
 
@@ -35,295 +46,132 @@
   <div class="filtercontainer">
     <form class="filtration">
       <input type="text" name="search" id="search" placeholder="Пошук" />
-      
+
       <select name="filterStatus" id="filterStatus">
         <option value="">Статус</option>
         <option value="Open">Open</option>
         <option value="Done">Done</option>
       </select>
-      
+
       <select name="filterUrgency" id="filterUrgency">
         <option value="">Терміновість</option>
-        <option value="High">Висока</option>
-        <option value="Normal">Нормальна</option>
-        <option value="Low">Низька</option>
+        <option value="Висока">Висока</option>
+        <option value="Нормальна">Нормальна</option>
+        <option value="Низька">Низька</option>
       </select>
     </form>
-   
+
     <button class="filtersub">Пошук</button>
   </div>
 
-   
+
   <!-- КОНТЕЙНЕР З КАРТКАМИ -->
 
-  <div class="container" id="container">
-
-    <p class="nocardsinfo inactive">Картки відсутні</p>
-   
-    <!-- КАРТКА КАРДІОЛОГА -->
-
-    <div class="card">
-      <button class="card__btn card__edit">Змінити</button>
-      <button class="card__btn card__delete"></button>
-      <div class="card__content-container">
-          <p><span class="visit-field-name">Ім'я: </span>Роман</p>
-          <p><span class="visit-field-name">Лікар: </span>Кардіолог</p>
-          <p><span class="visit-field-name">Вік: </span>54</p>
-          <p><span class="visit-field-name">Захворювання сердця: </span>-</p>
-          <p><span class="visit-field-name">Тиск: </span>150/80</p>
-          <p><span class="visit-field-name">Ідекс маси тіла: </span>25</p>
-          <p><span class="visit-field-name">Опис візиту: </span>Діагностика</p>
-          <p><span class="visit-field-name">Терміновість: </span>Нормальна</p>
-          <p><span class="visit-field-name">Ціль візиту: </span>УЗД</p>
-          <p><span class="visit-field-name">Статус: </span>Open</p>
-          <button>Згорнути</button>
-      </div>
-    </div>
-
-    <!-- КАРТКА СТОМТАОЛОГА -->
-
-    <div class="card">
-      <button class="card__btn card__edit">Змінити</button>
-      <button class="card__btn card__delete"></button>
-      <div class="card__content-container">
-          <p><span class="visit-field-name">Ім'я: </span>Іван</p>
-          <p><span class="visit-field-name">Лікар: </span>Стоматолог</p>
-          <p><span class="visit-field-name">Останній візит: </span>24.12.22</p>
-          <p><span class="visit-field-name">Опис візиту: </span>Чистка</p>
-          <p><span class="visit-field-name">Терміновість: </span>Нормальна</p>
-          <p><span class="visit-field-name">Ціль візиту: </span>Дентальна гігієна</p>
-          <p><span class="visit-field-name">Статус: </span>Open</p>
-          <button>Згорнути</button>
-      </div>
-    </div>
-
-    <!-- КАРТКА ТЕРАПЕВТА --> 
-
-    <div class="card">
-      <button class="card__btn card__edit">Змінити</button>
-      <button class="card__btn card__delete"></button>
-      <div class="card__content-container">
-          <p><span class="visit-field-name">Ім'я: </span>Олег</p>
-          <p><span class="visit-field-name">Лікар: </span>Терапевт</p>
-          <p><span class="visit-field-name">Вік: </span>25</p>
-          <p><span class="visit-field-name">Опис: </span>Огляд</p>
-          <p><span class="visit-field-name">Терміновість: </span>Висока</p>
-          <p><span class="visit-field-name">Ціль візиту: </span>Огляд</p>
-          <p><span class="visit-field-name">Статус: </span>Open</p>
-          <button>Згорнути</button>
-      </div>
-    </div>
-
-    <!-- ЗГОРНУТА КАРТКА -->
-
-    <div class="card ">
-      <button class="card__btn card__edit">Змінити</button>
-      <button class="card__btn card__delete"></button>
-      <div class="card__content-container">
-          <p><span class="visit-field-name">Ім'я: </span>яваіпіівпівп</p>
-          <p><span class="visit-field-name">Лікар: </span>Терапевт</p>
-          <button>Розгорнути</button>
-      </div>
-    </div>
-
-    <div class="card inactive">
-      <button class="card__btn card__edit">Змінити</button>
-      <button class="card__btn card__delete"></button>
-      <div class="card__content-container">
-          <p><span class="visit-field-name">Ім'я: </span>яваіпіівпівп</p>
-          <p><span class="visit-field-name">Лікар: </span>Терапевт</p>
-          <button>Розгорнути</button>
-      </div>
-    </div>
-    
-  </div>
+  <div class="root" id="root"></div>
 
 
-  <!-- МОДАЛЬНЕ ВІКНО ЛОГІНУ -->
+  <!-- МОДАЛЬНЕ ВІКНО ДЛЯ ЗАПИСУ ДО ЛІКАРЯ -->
 
-  <div class="modal inactive">
-    
-    <div class="modal__background"></div>
-   
-    <div class="modal__main-container">
-      
-      <div class="modal__content-wrapper">
-        <form>
-          <label>Логін</label>
-          <input>
-          <label>Пароль</label>
-          <input>
-        </form>
-
-      </div>
-          
-          <div class="modal__button-wrapper">           
-            <button class="modal__confirm-btn">Підтвердити</button>
-          </div>
-
-          <div class="modal__close"></div>
-
+  <div class="modal fade" id="modalSelectDoctor" aria-hidden="true" aria-labelledby="modalSelectDoctorLabel"
+    tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalSelectDoctorLabel">ОБЕРІТЬ ЛІКАРЯ</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <label>Лікар:</label><br />
+          <select name="select-doctor" id="select-doctor">
+            <option value="" disabled selected>Оберіть лікаря</option>
+            <option value="Терапевт">Терапевт</option>
+            <option value="Кардіолог">Кардіолог</option>
+            <option value="Стоматолог">Стоматолог</option>
+          </select>
+          <div></div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" data-bs-target="#modalCreateCard" data-bs-toggle="modal"
+            data-bs-dismiss="modal" disabled>Перейти до створення картки</button>
         </div>
       </div>
-
-  <!-- МОДАЛЬНІ ВІКНА ДЛЯ ЗАПИСУ ДО ЛІКАРЯ -->
-
-  <!-- ВІКНО ТЕРАПЕВТА -->
-
-  <div class="modal inactive">
-    <div class="modal__background"></div>
-    <div class="modal__main-container">
-        <div class="modal__content-wrapper">
-            <form><label>ЛІКАР</label>
-                <select> 
-                    <option value="none" selected="">ОБЕРІТЬ ЛІКАРЯ</option>
-                    <option value="Therapist">Терапевт</option>
-                    <option value="Cardiologist">Кардіолог</option>
-                    <option value="Dentist">Стоматолог</option>
-                </select>
-                                    
-                <form>
-                  
-                  <label>Статус</label>
-                  <select> 
-                    <option value="none" selected="">Оберіть статус</option>
-                    <option value="Open">Open</option>
-                    <option value="Done">Done</option>
-                  </select>
-                  
-                  <label>Терміновість</label>
-                  <select> 
-                    <option value="none" selected="">Оберіть терміновість</option>
-                    <option value="High">Висока</option>
-                    <option value="Normal">Нормальна</option>
-                    <option value="Low">Низька</option>
-                  </select>
-                  
-                  <label>Ім'я</label>
-                  <input>
-                  <label>Ціль візиту</label>
-                  <input>
-                  <label>Опис</label>
-                  <input>
-                  <label>Вік</label>
-                  <input>
-                                      
-                </form>
-            </form>
-        </div>
-    <div class="modal__button-wrapper">
-        <button class="modal__confirm-btn">Підтвердити</button></div>
-        <div class="modal__close"></div>
     </div>
   </div>
 
 
-
-   <!-- ВІКНО КАРДІОЛОГА -->
-
-   <div class="modal inactive">
-    <div class="modal__background"></div>
-    <div class="modal__main-container">
-        <div class="modal__content-wrapper">
-            <form><label>ЛІКАР</label>
-                <select> 
-                    <option value="none" selected="">ОБЕРІТЬ ЛІКАРЯ</option>
-                    <option value="Therapist">Терапевт</option>
-                    <option value="Cardiologist">Кардіолог</option>
-                    <option value="Dentist">Стоматолог</option>
-                </select>
-                                    
-                <form>
-                  
-                  <label>Статус</label>
-                  <select> 
-                    <option value="none" selected="">Оберіть статус</option>
-                    <option value="Open">Open</option>
-                    <option value="Done">Done</option>
-                  </select>
-                  
-                  <label>Терміновість</label>
-                  <select> 
-                    <option value="none" selected="">Оберіть терміновість</option>
-                    <option value="High">Висока</option>
-                    <option value="Normal">Нормальна</option>
-                    <option value="Low">Низька</option>
-                  </select>
-                  
-                  <label>Ім'я</label>
-                  <input>
-                  <label>Ціль візиту</label>
-                  <input>
-                  <label>Опис</label>
-                  <input>
-                  <label>Індекс маси тіла</label>
-                  <input>
-                  <label>Захворювання серця</label>
-                  <input>
-                  <label>Вік</label>
-                  <input>
-                                      
-                </form>
-            </form>
+  <div class="modal fade" id="modalCreateCard" aria-hidden="true" aria-labelledby="modalCreateCardLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalCreateCardLabel">Картка</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-    <div class="modal__button-wrapper">
-        <button class="modal__confirm-btn">Підтвердити</button></div>
-        <div class="modal__close"></div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" data-bs-target="#modalSelectDoctor" data-bs-toggle="modal"
+            data-bs-dismiss="modal">Повернутися назад</button>
+          <button class="btn btn-primary create-card" class="btn-close" data-bs-dismiss="modal"
+            aria-label="Close">Створити картку</button>
+        </div>
+      </div>
     </div>
   </div>
 
 
+  <!-- МОДАЛЬНЕ ВІКНО ДЛЯ ЗМІНИ КАРТКИ -->
 
-  <!-- ВІКНО СТОМАТОЛОГА -->
-
-  <div class="modal inactive">
-    <div class="modal__background"></div>
-    <div class="modal__main-container">
-        <div class="modal__content-wrapper">
-            <form><label>ЛІКАР</label>
-                <select> 
-                    <option value="none" selected="">ОБЕРІТЬ ЛІКАРЯ</option>
-                    <option value="Therapist">Терапевт</option>
-                    <option value="Cardiologist">Кардіолог</option>
-                    <option value="Dentist">Стоматолог</option>
-                </select>
-                                    
-                <form>
-                  
-                  <label>Статус</label>
-                  <select> 
-                    <option value="none" selected="">Оберіть статус</option>
-                    <option value="Open">Open</option>
-                    <option value="Done">Done</option>
-                  </select>
-                  
-                  <label>Терміновість</label>
-                  <select> 
-                    <option value="none" selected="">Оберіть терміновість</option>
-                    <option value="High">Висока</option>
-                    <option value="Normal">Нормальна</option>
-                    <option value="Low">Низька</option>
-                  </select>
-                  
-                  <label>Ім'я</label>
-                  <input>
-                  <label>Ціль візиту</label>
-                  <input>
-                  <label>Опис</label>
-                  <input>
-                  <label>Останній візит</label>
-                  <input>
-                                      
-                </form>
-            </form>
+  <div class="modal fade" id="modalChangeCard" aria-hidden="true" aria-labelledby="modalChangeCardLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalChangeCardLabel">ЗМІНА КАРТКИ</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-    <div class="modal__button-wrapper">
-        <button class="modal__confirm-btn">Підтвердити</button></div>
-        <div class="modal__close"></div>
+        <div class="modal-body">
+          <label>Лікар:</label><br />
+          <select name="change-doctor" id="change-doctor">
+            <option value="Терапевт">Терапевт</option>
+            <option value="Кардіолог">Кардіолог</option>
+            <option value="Стоматолог">Стоматолог</option>
+          </select>
+          <div></div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" data-bs-target="#modalCreateCard2" data-bs-toggle="modal"
+            data-bs-dismiss="modal">Перейти до вигляду нової картки</button>
+        </div>
+      </div>
     </div>
   </div>
-  
-  <script src="script.js"></script>  
+
+
+  <div class="modal fade" id="modalCreateCard2" aria-hidden="true" aria-labelledby="modalCreateCard2Label"
+    tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalCreateCard2Label">Картка</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" data-bs-target="#modalChangeCard" data-bs-toggle="modal"
+            data-bs-dismiss="modal">Повернутися назад</button>
+          <button class="btn btn-primary change-card" class="btn-close" data-bs-dismiss="modal"
+            aria-label="Close">Оновити картку</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <script type="module" src="./scripts/script.js"></script>
+  <!-- <script src="./scripts/visit.js"></script> -->
 
 </body>
 

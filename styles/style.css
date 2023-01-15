@@ -96,7 +96,7 @@ form.filtration {
   width: 80%;
 }
 
-.container {
+.cardContainer {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 16px;
@@ -127,7 +127,7 @@ span.visit-field-name {
 
 
 
-.modal {
+.my-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -171,7 +171,7 @@ span.visit-field-name {
   border-radius: 3px;
   border: 1px solid #abd8eb;
   cursor: pointer;
-  
+
 }
 
 .modal__close {
@@ -227,7 +227,7 @@ span.visit-field-name {
 }
 
 .modal__confirm-btn {
-  background-color: rgb(9, 113, 247);  
+  background-color: rgb(9, 113, 247);
   border-radius: 10px;
 }
 
@@ -280,14 +280,6 @@ select{
   margin-top: 36px;
 }
 
-
-
-
-
-
-
-
-
 /* КАРТКИ */
 
 .card {
@@ -300,7 +292,8 @@ select{
   margin: 0 0 8px 0;
   position: relative;
   background-color: rgba(28, 149, 219, 0.5);
-  max-height: max-content;  
+  /* max-height: max-content;   */
+  height: fit-content;
 }
 
 .card p {
@@ -320,12 +313,12 @@ select{
 button.card__delete {
   cursor: pointer;
   color: #ffffff;
-  background-color: rgb(9, 113, 247);  
+  background-color: rgb(9, 113, 247);
   font-weight: 400;
   top: 8px;
   right: 8px;
   padding: 0 2px;
-  transition: 0.2s;  
+  transition: 0.2s;
 }
 
 button.card__delete,
@@ -359,7 +352,8 @@ button.card__edit {
   border-radius: 10px;
   transition: 0.3s;
   cursor: pointer;
-  padding: 5px 10px;
+  padding: 0 10px;
+  height: 28px;
   font-size: 14px;
   border: 1px solid #2d9dcd;
 }
@@ -383,4 +377,44 @@ button.card__edit:hover {
 
 .inactive {
   display: none;
+}
+
+
+
+#modalSelectDoctor label,
+#modalChangeCard label {
+  margin-left: 10px;
+}
+
+#modalSelectDoctor input,
+#modalSelectDoctor select,
+#modalChangeCard input,
+#modalChangeCard select {
+  margin: 10px;
+}
+
+#modalCreateCard .modal-body p,
+#modalCreateCard2 .modal-body p {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+  margin: 8px;
+  font-size: 17px;
+}
+
+#modalCreateCard .modal-body p span:nth-child(1),
+#modalCreateCard2 .modal-body p span:nth-child(1) {
+  color: rgb(70, 70, 70);
+}
+
+#modalCreateCard .modal-body p span:nth-child(2),
+#modalCreateCard2 .modal-body p span:nth-child(2) {
+  align-self: flex-end;
+  color: rgb(11, 22, 138);
+}
+
+#modalCreateCard .modal-footer,
+#modalCreateCard2 .modal-footer {
+  display: flex;
+  justify-content: space-between;
 }
