@@ -1,5 +1,5 @@
 import {filter} from "./filter.js"
-import {Visit, VisitCardiologist, VisitDentist, VisitTherapist} from "./visit.js"
+import {VisitCardiologist, VisitDentist, VisitTherapist} from "./visit.js"
 import { Modal } from "./modal.js"
 import { getDataFromLS, setDataToLS } from './utils.js';
 
@@ -157,15 +157,15 @@ const renderCards = (cards, root) => {
             }) => {
                 const data = [ age, description, doctor, fullName, urgency, purpose, statusVisit, heartIllness, id, pressure, weightIndex, lastDateVisit, 'edit', deleteF ]
 
-                if (doctor === "Cardiologist") {
+                if (doctor === "Кардіолог") {
                     new VisitCardiologist(...data).render(container);
                 }
 
-                if (doctor === "Dentist") {
+                if (doctor === "Стоматолог") {
                     new VisitDentist(...data).render(container);
                 }
 
-                if (doctor === "Therapist") {
+                if (doctor === "Терапевт") {
                     new VisitTherapist(...data).render(container);
                 }
     })
@@ -174,20 +174,16 @@ const renderCards = (cards, root) => {
 }
 
 const renderNoCardsInfo = (root) => {
-    root.innerHTML = `<p class="nocardsinfo">There is no any cards</p>`
+    root.innerHTML = `<p class="nocardsinfo">Картки відсутні</p>`
 }
 
 export const renderItems = function (array = getDataFromLS("array")) {
     const root = document.querySelector('#root')
 
-    if (!Array.isArray(array)) {
-        loadAndSetLocalStorage();
+    if(array.length === 0) {
+        renderNoCardsInfo(root)
     } else {
-        if(array.length === 0) {
-            renderNoCardsInfo(root)
-        } else {
-            renderCards(array, root)
-        }
+        renderCards(array, root)
     }
 }
 
@@ -210,6 +206,8 @@ export function deleteF() {
         })
 }
 
+
+
 function init () {
     document.querySelector(".calllogin")?.addEventListener("click", () => {
         new LoginModal().render();
@@ -224,9 +222,22 @@ function init () {
     }
 }
 
-document.addEventListener('DOMContentLoaded', init)
+document.addEventListener('DOMContentLoaded', init);
 
-const statusesText = {
+/* const statusesText = {
     high: 'Висока',
     low: 'Низька'
+} */
+
+/* function deleteCard(id){
+    fetch(`https://ajax.test-danit.com/api/v2/cards/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${getDataFromLS("token")}`
+        },
+    })
 }
+
+deleteCard(142857) */
+

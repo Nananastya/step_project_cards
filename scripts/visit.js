@@ -1,4 +1,5 @@
 import {deleteF} from "./script.js"
+import {Change} from "./change.js"
 
 export class Visit {
     constructor(editAction, deleteAction) {
@@ -15,15 +16,22 @@ export class Visit {
         this.contentContainer.classList.add("card__content-container");
         this.divCard.append(this.contentContainer);
         this.divCard.className = "card";
-        this.bttnEdit.className = "card__btn card__edit";
+        this.bttnEdit.className = "btn btn-primary card__btn card__edit";
         this.bttnEdit.innerText = "Змінити";
+        this.bttnEdit.setAttribute("type","button");
+        this.bttnEdit.setAttribute("data-bs-toggle","modal");
+        this.bttnEdit.setAttribute("data-bs-target","#modalChangeCard");
         this.bttnDel.className = "card__btn card__delete";
     }
     render(container = document.body) {
         this.createElem();
         container.append(this.divCard);
         this.bttnDel.addEventListener("click", this.deleteAction?.bind(this));
-        // this.bttnEdit.addEventListener("click", this.editAction?.bind(this));
+        
+        this.bttnEdit.addEventListener("click", (e) => {
+            let c = new Change(e.target.parentElement);
+            c.getDoctorById(e.target.parentElement.getAttribute("card-id"));
+        });
     }
 }
 
@@ -72,6 +80,8 @@ export class VisitTherapist extends Visit {
     }
     createElem() {
         super.createElem();
+
+        this.contentContainer.parentNode.setAttribute("card-id", this.id);
         this.ageContainer.innerHTML = `<span class="visit-field-name">Вік: </span>${this.age}`;
         this.descContainer.innerHTML = `<span class="visit-field-name">Опис візіиту: </span>${this.desc}`;
         this.doctorContainer.innerHTML = `<span class="visit-field-name">Лікар: </span>${this.doctor}`;
@@ -154,6 +164,7 @@ export class VisitDentist extends Visit {
     createElem() {
         super.createElem();
 
+        this.contentContainer.parentNode.setAttribute("card-id", this.id);
         this.descContainer.innerHTML = `<span class="visit-field-name">Опис візиту: </span>${this.desc}`;
         this.doctorContainer.innerHTML = `<span class="visit-field-name">Лікар: </span>${this.doctor}`;
         this.fullNameContainer.innerHTML = `<span class="visit-field-name">Ім'я: </span>${this.fullName}`;
@@ -235,13 +246,15 @@ export class VisitCardiologist extends Visit {
     }
     createElem() {
         super.createElem();
+
+        this.contentContainer.parentNode.setAttribute("card-id", this.id);
         this.ageContainer.innerHTML = `<span class="visit-field-name">Вік: </span>${this.age}`;
         this.descContainer.innerHTML = `<span class="visit-field-name">Опис візиту: </span>${this.desc}`;
         this.doctorContainer.innerHTML = `<span class="visit-field-name">Лікар: </span>${this.doctor}`;
         this.fullNameContainer.innerHTML = `<span class="visit-field-name">Ім'я: </span>${this.fullName}`;
         this.urgencyContainer.innerHTML = `<span class="visit-field-name">Терміновість: </span>${this.urgency}`;
-        this.purposeContainer.innerHTML = `<span class="visit-field-name">Ціль: </span>${this.purpose}`;
-        this.statusContainer.innerHTML = `<span class="visit-field-name">Статус: </span>${statusesText[this.status]}`;
+        this.purposeContainer.innerHTML = `<span class="visit-field-name">Ціль візиту: </span>${this.purpose}`;
+        this.statusContainer.innerHTML = `<span class="visit-field-name">Статус: </span>${this.status}`;
         this.heartIllnessContainer.innerHTML = `<span class="visit-field-name">Захворювання серця: </span>${this.heartIllness}`;
         this.pressureContainer.innerHTML = `<span class="visit-field-name">Тиск: </span>${this.pressure}`;
         this.weightIndexContainer.innerHTML = `<span class="visit-field-name">Індекс маси тіла: </span>${this.weightIndex}`;
@@ -279,38 +292,3 @@ export class VisitCardiologist extends Visit {
     }
 }
 
-/* new VisitCardiologist(
-    25,
-    'desc',
-    'doctor',
-    'fullName',
-    'urgency',
-    'purpose',
-    'statusVisit',
-    'heartIllness',
-    'id',
-    'pressure',
-    'weightIndex',
-    'lastDateVisit',
-    'edit',
-    'deleteF'
-).render(container);
-
-
-new VisitDentist(
-    'age',
-    'desc',
-    'doctor',
-    'fullName',
-    'urgency',
-    'purpose',
-    'statusVisit',
-    'heartIllness',
-    'id',
-    'pressure',
-    'weightIndex',
-    'lastDateVisit',
-    'edit',
-    'deleteF'
-).render(container);
- */

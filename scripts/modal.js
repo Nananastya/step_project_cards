@@ -18,7 +18,8 @@ export class Modal {
     this.inputLastVisitValue = "";
 
     this._modalDiv = document.querySelector('#modalSelectDoctor .modal-body div');
-    this._inputs = this._modalDiv?.getElementsByTagName("input");
+    this._inputs = []
+    this._selects = []
     this._modalSelect = document.querySelector('#modalSelectDoctor .modal-body select');
     this._goToSecondModal = document.querySelector('#modalSelectDoctor .btn-primary');
     this._modalBodyCard = document.querySelector('#modalCreateCard .modal-body');
@@ -26,7 +27,15 @@ export class Modal {
 
     this._modalSelect?.addEventListener("change", () => {
       this.chooseDoctor();
+
+      this._inputs = [ ...this._modalDiv?.getElementsByTagName("input") ];
+      this._selects = [...this._modalDiv.querySelectorAll('select')]
+
       this.check();
+    });
+
+    document.querySelector('#modalSelectDoctor .modal-header .btn-close').addEventListener("click", () => {
+      this._modalDiv.innerHTML = "";
     });
 
     this._goToSecondModal?.addEventListener("click", () => {
@@ -50,29 +59,29 @@ export class Modal {
         `<label>Ціль візиту:</label></br>
         <input placeholder="Ціль візиту..." class="aim"></input></br>
         <select class="status">
-            <option value="none" selected disabled>Статус</option>
-            <option value="open">Open</option>
-            <option value="done">Done</option>
+            <option value="" selected disabled>Статус</option>
+            <option value="Open">Open</option>
+            <option value="Done">Done</option>
         </select></br>
         <label>Короткий опис візиту:</label></br>
         <input placeholder="Короткий опис візиту..." class="description"></input></br>
         <label>Терміновість:</label></br>
         <select class="urgency">
-            <option value="none" selected disabled>Оберіть терміновість</option>
-            <option value="ordinary">Звичайна</option>
-            <option value="prior">Пріоритетна</option>
-            <option value="urgent">Невідкладна</option>
+            <option value="" selected disabled>Оберіть терміновість</option>
+            <option value="Висока">Висока</option>
+            <option value="Нормальна">Нормальна</option>
+            <option value="Низька">Низька</option>
         </select></br>
         <label>ПІБ:</label></br>
         <input placeholder="ПІБ" class="name"></input></br>`;
 
-      if(this._modalSelect.value === "Therapist"){
+/*       if(this._modalSelect.value === "Терапевт"){
         this._modalDiv.innerHTML +=
         `</br><label>Вік:</label></br>
         <input placeholder="Вік..." class="age"></input></br>`;
-      }
+      } */
 
-      if (this._modalSelect.value === "Cardiologist"){
+      if (this._modalSelect.value === "Кардіолог"){
         this._modalDiv.innerHTML +=
         `<label>Звичайний тиск:</label></br>
         <input placeholder="Звичайний тиск..." class="pressure"></input></br>
@@ -84,7 +93,7 @@ export class Modal {
         <input placeholder="Вік..." class="age"></input></br>`;
       }
 
-      if (this._modalSelect.value === "Dentist"){
+      if (this._modalSelect.value === "Стоматолог"){
         this._modalDiv.innerHTML +=
           `<label>Дата останнього візиту:</label></br>
           <input placeholder="Дата останнього візиту..." class="last-visit"></input></br>`;
@@ -101,27 +110,27 @@ export class Modal {
   }
 
   check(){
-    for(let el of this._inputs){
-      el.addEventListener("input", () => {
+    for(let el of [ ...this._inputs, ...this._selects]){
+      const isInput = el.tagName === 'INPUT'
+
+      el.addEventListener(isInput ? "input" : 'change', () => {
         if([...this._inputs].every(this.isNotEmpty)){
           this._goToSecondModal.disabled = false;
           this.inputAimValue = this._modalDiv.querySelector(".aim").value;
           let selectStatusValueAttribute = this._modalDiv.querySelector(".status").value;
-          this.selectStatusValue = this._modalDiv.querySelector(`option[value="${selectStatusValueAttribute}"]`).textContent;
+          this.selectStatusValue = this._modalDiv.querySelector(`option[value="${selectStatusValueAttribute}"]`).value;
           this.inputDescriptionValue = this._modalDiv.querySelector(".description").value;
           let selectUrgencyValueAttribute = this._modalDiv.querySelector(".urgency").value;
-          this.selectUrgencyValue = this._modalDiv.querySelector(`option[value="${selectUrgencyValueAttribute}"]`).textContent;
+          this.selectUrgencyValue = this._modalDiv.querySelector(`option[value="${selectUrgencyValueAttribute}"]`).value;
           this.inputNameValue = this._modalDiv.querySelector(".name").value;
-          if(this._modalSelect.value === "Therapist"){
-            this.inputAgeValue = this._modalDiv.querySelector(".age").value;
-          }
-          else if(this._modalSelect.value === "Cardiologist"){
+
+          if(this._modalSelect.value === "Кардіолог"){
             this.inputAgeValue = this._modalDiv.querySelector(".age").value;
             this.inputPressureValue = this._modalDiv.querySelector(".pressure").value;
             this.inputIndexValue = this._modalDiv.querySelector(".index").value;
             this.inputIlnessesValue = this._modalDiv.querySelector(".ilnesses").value;
           }
-          else if(this._modalSelect.value === "Dentist"){
+          else if(this._modalSelect.value === "Стоматолог"){
             this.inputLastVisitValue = this._modalDiv.querySelector(".last-visit").value;
           }
         }
@@ -139,20 +148,21 @@ export class Modal {
       <p><span>Статус: </span><span>${this.selectStatusValue}</span></p>
       <p><span>Терміновість: </span><span>${this.selectUrgencyValue}</span></p>
       <p><span>ПІБ: </span><span>${this.inputNameValue}</span></p>`;
-    if(this._modalSelect.value === "Therapist"){
+/*     if(this._modalSelect.value === "Терапевт"){
       this._modalBodyCard.innerHTML += `<p><span>Вік: </span><span>${this.inputAgeValue}</span></p>`;
-    }
-    else if(this._modalSelect.value === "Cardiologist"){
+    } */
+    if(this._modalSelect.value === "Кардіолог"){
       this._modalBodyCard.innerHTML +=
       `<p><span>Звичайний тиск: </span><span>${this.inputPressureValue}</span></p>
       <p><span>Індекс маси тіла: </span><span>${this.inputIndexValue}</span><p>
       <p><span>Перенесені захворювання серцево-судинної системи: </span><span>${this.inputIlnessesValue}</span></p>
       <p><span>Вік: </span><span>${this.inputAgeValue}</span></p>`;
     }
-    else if(this._modalSelect.value === "Dentist"){
+    else if(this._modalSelect.value === "Стоматолог"){
       this._modalBodyCard.innerHTML += `<p><span>Дата останнього візиту: </span><span>${this.inputLastVisitValue}</span></p>`;
     }
   }
+
   postGet(){
     const data = {
         doctor        : this._modalSelect.value,
@@ -164,13 +174,14 @@ export class Modal {
         age           : `${this.inputAgeValue}`,
     }
 
-    if (this._modalSelect.value === "Cardiologist") {
+    if (this._modalSelect.value === "Кардіолог") {
       data.pressure = `${this.inputPressureValue}`
       data.weightIndex = `${this.inputIndexValue}`
       data.heartIllness = `${this.inputIlnessesValue}`
+      data.age = `${this.inputAgeValue}`
     }
 
-    if (this._modalSelect.value === "Dentist") {
+    if (this._modalSelect.value === "Стоматолог") {
       data.lastDateVisit = `${this.inputLastVisitValue}`
 
       delete data.age
@@ -205,7 +216,7 @@ export class Modal {
         },
         }).then(response => response.json())
             .then(r => {
-                if(r.doctor === "Therapist"){
+                if(r.doctor === "Терапевт"){
                     new VisitTherapist(
                             r.age,
                             r.description,
@@ -220,11 +231,10 @@ export class Modal {
                             "",
                             "",
                             "",
-                            deleteF,
-                            ""
-                        ).render(container);
+                            deleteF
+                        ).render(document.querySelector(".cardContainer"));
                 }
-                else if (r.doctor === "Cardiologist"){
+                else if (r.doctor === "Кардіолог"){
                     new VisitCardiologist(
                         r.age,
                         r.description,
@@ -240,11 +250,10 @@ export class Modal {
                         "",
                         "",
                         deleteF,
-                        ""
 
-                    ).render(container);
+                    ).render(document.querySelector(".cardContainer"));
                 }
-                else if (r.doctor === "Dentist"){
+                else if (r.doctor === "Стоматолог"){
                     new VisitDentist(
                         r.age,
                         r.description,
@@ -259,34 +268,9 @@ export class Modal {
                         "",
                         r.lastDateVisit,
                         "",
-                        deleteF,
-                        ""
-                    ).render(container);
+                        deleteF
+                    ).render(document.querySelector(".cardContainer"));
                 }
             })
-  }
-  getCards(){
-    fetch("https://ajax.test-danit.com/api/v2/cards", {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${getDataFromLS('token')}`
-      },
-    })
-      .then(response => response.json())
-      .then(response => {
-        for(let i = 0; i < response.length; i++){
-          this.getCardById(response[i].id);
-        }
-  })
-  }
-  deleteCard(id){
-    fetch(`https://ajax.test-danit.com/api/v2/cards/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${getDataFromLS('token')}`
-      },
-    })
   }
 }

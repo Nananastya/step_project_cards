@@ -280,14 +280,6 @@ select{
   margin-top: 36px;
 }
 
-
-
-
-
-
-
-
-
 /* КАРТКИ */
 
 .card {
@@ -360,7 +352,8 @@ button.card__edit {
   border-radius: 10px;
   transition: 0.3s;
   cursor: pointer;
-  padding: 5px 10px;
+  padding: 0 10px;
+  height: 28px;
   font-size: 14px;
   border: 1px solid #2d9dcd;
 }
@@ -388,16 +381,20 @@ button.card__edit:hover {
 
 
 
-#modalSelectDoctor label {
+#modalSelectDoctor label,
+#modalChangeCard label {
   margin-left: 10px;
 }
 
 #modalSelectDoctor input,
-#modalSelectDoctor select{
+#modalSelectDoctor select,
+#modalChangeCard input,
+#modalChangeCard select {
   margin: 10px;
 }
 
-#modalCreateCard .modal-body p {
+#modalCreateCard .modal-body p,
+#modalCreateCard2 .modal-body p {
   display: grid;
   grid-template-columns: 1fr 1fr;
   justify-content: center;
@@ -405,16 +402,19 @@ button.card__edit:hover {
   font-size: 17px;
 }
 
-#modalCreateCard .modal-body p span:nth-child(1){
+#modalCreateCard .modal-body p span:nth-child(1),
+#modalCreateCard2 .modal-body p span:nth-child(1) {
   color: rgb(70, 70, 70);
 }
 
-#modalCreateCard .modal-body p span:nth-child(2){
+#modalCreateCard .modal-body p span:nth-child(2),
+#modalCreateCard2 .modal-body p span:nth-child(2) {
   align-self: flex-end;
   color: rgb(11, 22, 138);
 }
 
-#modalCreateCard .modal-footer{
+#modalCreateCard .modal-footer,
+#modalCreateCard2 .modal-footer {
   display: flex;
   justify-content: space-between;
 }
