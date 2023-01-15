@@ -1,8 +1,5 @@
 import {getDataFromLS, setDataToLS}                         from "./utils.js"
-import {VisitTherapist, VisitDentist, VisitCardiologist}    from "./visit.js";
-import {Modal} from "./modal.js"
 import {loadAndSetLocalStorage}                             from "./script.js"
-import {deleteF}                                            from "./script.js"
 
 export class Change {
     constructor(cardEl = "") {
@@ -135,13 +132,8 @@ export class Change {
                 </select></br>`
         }
         this._modalDiv.innerHTML +=
-        `<label>ПІБ:</label></br>
-        <input placeholder="ПІБ" class="name" value="${name}"></input></br>`;
-/*         if (doctor === "Терапевт"){
-          this._modalDiv.innerHTML +=
-          `<label>Вік:</label></br>
-          <input placeholder="Вік..." class="age" value="${age}"></input></br>`
-        } */
+        `<label>Ім'я:</label></br>
+        <input placeholder="Ім'я" class="name" value="${name}"></input></br>`;
         if (doctor === "Кардіолог"){
           this._modalDiv.innerHTML +=
           `<label>Звичайний тиск:</label></br>
@@ -182,14 +174,9 @@ export class Change {
         <option value="Normal">Нормальна</option>
         <option value="Low" selected>Низька</option>
       </select></br>
-      <label>ПІБ:</label></br>
-      <input placeholder="ПІБ" class="name"></input></br>`;
+      <label>Ім'я:</label></br>
+      <input placeholder="Ім'я" class="name"></input></br>`;
 
-/*       if(this._modalSelect.value === "Терапевт"){
-        this._modalDiv.innerHTML +=
-        `</br><label>Вік:</label></br>
-        <input placeholder="Вік..." class="age"></input></br>`;
-      } */
       if (this._modalSelect.value === "Кардіолог"){
         this._modalDiv.innerHTML +=
         `<label>Звичайний тиск:</label></br>
@@ -231,9 +218,7 @@ export class Change {
             let selectUrgencyValueAttribute = this._modalDiv.querySelector(".urgency").value;
             this.selectUrgencyValue = this._modalDiv.querySelector(`option[value="${selectUrgencyValueAttribute}"]`).textContent;
             this.inputNameValue = this._modalDiv.querySelector(".name").value;
-/*             if(this._modalSelect.value === "Терапевт"){
-              this.inputAgeValue = this._modalDiv.querySelector(".age").value;
-            } */
+
             if(this._modalSelect.value === "Кардіолог"){
               this.inputAgeValue = this._modalDiv.querySelector(".age").value;
               this.inputPressureValue = this._modalDiv.querySelector(".pressure").value;
@@ -256,10 +241,8 @@ export class Change {
           <p><span>Короткий опис візиту: </span><span>${this.inputDescriptionValue}</span><p>
           <p><span>Статус: </span><span>${this.selectStatusValue}</span></p>
           <p><span>Терміновість: </span><span>${this.selectUrgencyValue}</span></p>
-          <p><span>ПІБ: </span><span>${this.inputNameValue}</span></p>`;
-/*         if(doctor === "Терапевт"){
-          this._modalBodyCard.innerHTML += `<p><span>Вік: </span><span>${this.inputAgeValue}</span></p>`;
-        } */
+          <p><span>Ім'я: </span><span>${this.inputNameValue}</span></p>`;
+
         if(doctor === "Кардіолог"){
           this._modalBodyCard.innerHTML +=
           `<p><span>Звичайний тиск: </span><span>${this.inputPressureValue}</span></p>
@@ -279,8 +262,7 @@ export class Change {
             description   : `${this.inputDescriptionValue}`,
             status        : `${this.selectStatusValue}`,
             urgency       : `${this.selectUrgencyValue}`,
-            fullName      : `${this.inputNameValue}`,
-            /* age           : `${this.inputAgeValue}`, */
+            fullName      : `${this.inputNameValue}`,            
         }
 
         if (this._modalSelect.value === "Кардіолог") {
@@ -292,8 +274,7 @@ export class Change {
 
         if (this._modalSelect.value === "Стоматолог") {
           data.lastDateVisit = `${this.inputLastVisitValue}`
-
-          /* delete data.age */
+          
         }
 
         fetch(`https://ajax.test-danit.com/api/v2/cards/${id}`, {

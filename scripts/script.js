@@ -1,75 +1,14 @@
 import {filter} from "./filter.js"
 import {VisitCardiologist, VisitDentist, VisitTherapist} from "./visit.js"
-import { Modal } from "./modal.js"
+import { Modal, LoginModal } from "./modal.js"
 import { getDataFromLS, setDataToLS } from './utils.js';
 
 const baseUrl = "https://ajax.test-danit.com/api/v2/cards"
 
-class LoginModal {
-    constructor(confirmL) {
-        this._modalElement = document.createElement("div");
-        this._backgroundContainer = document.createElement("div");
-        this._mainContainer = document.createElement("div");
-        this._contentContainer = document.createElement("div");
-        this._buttonContainer = document.createElement("div");
-        this._closeButton = document.createElement("div");
-        this.form = document.createElement("form");
-        this.inputLogin = document.createElement("input");
-        this.inputLogin.type = 'login'
-        this.inputPassWord = document.createElement("input");
-        this.inputPassWord.type = 'password'
-        this.confirmBttn = document.createElement("button");
-        this.noInfoMessage = document.createElement("p");
-        this.confirmL = confirmL;
-    }
-    closeModal() {
-        this._modalElement.remove();
-    }
-    createElements() {
-        this._modalElement.classList.add("my-modal");
-        this._modalElement.append(this._backgroundContainer);
-        this._backgroundContainer.classList.add("modal__background");
-        this._backgroundContainer.addEventListener("click", this.closeModal.bind(this));
+const ERRORS = ['Incorrect username or password', "The token does not match any known user"]
 
-        this._modalElement.append(this._mainContainer);
-        this._mainContainer.classList.add("modal__main-container");
-        this._mainContainer.append(this._contentContainer);
-        this._mainContainer.append(this._buttonContainer);
-        this._mainContainer.append(this._closeButton);
-        this._contentContainer.classList.add("modal__content-wrapper");
-        this._buttonContainer.classList.add("modal__button-wrapper");
-        this._closeButton.classList.add("modal__close");
-        this._closeButton.addEventListener("click", this.closeModal.bind(this));
-
-        this.form.insertAdjacentHTML("beforeend", "<label>Логін</label>");
-        this.form.append(this.inputLogin);
-        this.form.insertAdjacentHTML("beforeend", "<label>Пароль</label>");
-        this.form.append(this.inputPassWord);
-        this._contentContainer.append(this.form);
-        this._buttonContainer.append(this.confirmBttn);
-
-        this.confirmBttn.innerText = "Підтвердити";
-        this.confirmBttn.classList.add("modal__confirm-btn");
-        this.confirmBttn.addEventListener("click", () => {
-            this.noInfoMessage.innerText = "";
-            if (this.inputLogin.value === "" || this.inputPassWord.value === "") {
-                this.form.append(this.noInfoMessage);
-                this.noInfoMessage.innerText = "Усі поля мають бути заповнені";
-            } else {
-                confirmL(this.inputLogin.value, this.inputPassWord.value);
-                this.closeModal();
-            }
-        });
-    }
-    render(container = document.body) {
-        this.createElements();
-        container.append(this._modalElement);
-    }
-
-}
-
-const confirmL = function (inputLogin, inputPassWord) {
-    fetch(`${baseUrl}/login`, {
+export const confirmL = async function (inputLogin, inputPassWord, callback) {
+    const response = await fetch(`${baseUrl}/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -79,17 +18,19 @@ const confirmL = function (inputLogin, inputPassWord) {
             password: `${inputPassWord}`,
         }),
     })
-        .then((response) => response.text())
-        .then((token) => {
-            if (token === "The token does not match any known user") {
-                alert('Неправильний імейл або пароль');
-            } else {
-                setDataToLS("token", token);
-                document.querySelector(".calllogin")?.remove();
-                loadAndSetLocalStorage();
-                removeLoginBtn();
-            }
-        })
+
+    if (response.status >= 400) {
+        return alert(await response.text())
+    }
+
+    const token = await response.text()
+
+    setDataToLS("token", token);
+    document.querySelector(".calllogin")?.remove();
+    loadAndSetLocalStorage();
+    removeLoginBtn();
+    callback()
+
 }
 
 export const loadAndSetLocalStorage = function () {
@@ -103,12 +44,12 @@ export const loadAndSetLocalStorage = function () {
         .then((resp) => resp.json())
         .then((array) => {
             setDataToLS("array", array);
-            renderItems();
+            renderItems(array);
         })
         .catch((error) => {
             console.warn("SERVER ERROR", error);
             alert(
-                "There are server. If  problems withthey persevere, please try again later."
+                "Проблеми з сервером"
             );
 
         });
@@ -199,14 +140,12 @@ export function deleteF() {
                 const currentArray = getDataFromLS("array")?.filter(({id}) => id !== this.id);
 
                 setDataToLS("array", currentArray);
-                renderItems();
+                renderItems(currentArray);
             } else {
                 throw new Error();
             }
         })
 }
-
-
 
 function init () {
     document.querySelector(".calllogin")?.addEventListener("click", () => {
@@ -218,26 +157,8 @@ function init () {
 
     if (getDataFromLS("token")) {
         removeLoginBtn()
-        renderItems();
+        loadAndSetLocalStorage();
     }
 }
 
 document.addEventListener('DOMContentLoaded', init);
-
-/* const statusesText = {
-    high: 'Висока',
-    low: 'Низька'
-} */
-
-/* function deleteCard(id){
-    fetch(`https://ajax.test-danit.com/api/v2/cards/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${getDataFromLS("token")}`
-        },
-    })
-}
-
-deleteCard(142857) */
-

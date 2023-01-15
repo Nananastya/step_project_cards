@@ -1,8 +1,72 @@
 import {renderItems}                                        from "./script.js"
 import {getDataFromLS, setDataToLS}                         from "./utils.js"
-import {loadAndSetLocalStorage}                             from "./script.js"
-import {deleteF}                                            from "./script.js"
+import {loadAndSetLocalStorage, deleteF, confirmL}          from "./script.js"
 import {VisitTherapist, VisitDentist, VisitCardiologist}    from "./visit.js";
+
+export class LoginModal {
+  constructor(confirmL) {
+      this._modalElement = document.createElement("div");
+      this._backgroundContainer = document.createElement("div");
+      this._mainContainer = document.createElement("div");
+      this._contentContainer = document.createElement("div");
+      this._buttonContainer = document.createElement("div");
+      this._closeButton = document.createElement("div");
+      this.form = document.createElement("form");
+      this.inputLogin = document.createElement("input");
+      this.inputLogin.type = 'login'
+      this.inputPassWord = document.createElement("input");
+      this.inputPassWord.type = 'password'
+      this.confirmBttn = document.createElement("button");
+      this.noInfoMessage = document.createElement("p");
+      this.confirmL = confirmL;
+  }
+  closeModal() {
+      this._modalElement.remove();
+  }
+  createElements() {
+      this._modalElement.classList.add("my-modal");
+      this._modalElement.append(this._backgroundContainer);
+      this._backgroundContainer.classList.add("modal__background");
+      this._backgroundContainer.addEventListener("click", this.closeModal.bind(this));
+
+      this._modalElement.append(this._mainContainer);
+      this._mainContainer.classList.add("modal__main-container");
+      this._mainContainer.append(this._contentContainer);
+      this._mainContainer.append(this._buttonContainer);
+      this._mainContainer.append(this._closeButton);
+      this._contentContainer.classList.add("modal__content-wrapper");
+      this._buttonContainer.classList.add("modal__button-wrapper");
+      this._closeButton.classList.add("modal__close");
+      this._closeButton.addEventListener("click", this.closeModal.bind(this));
+
+      this.form.insertAdjacentHTML("beforeend", "<label>Логін</label>");
+      this.form.append(this.inputLogin);
+      this.form.insertAdjacentHTML("beforeend", "<label>Пароль</label>");
+      this.form.append(this.inputPassWord);
+      this._contentContainer.append(this.form);
+      this._buttonContainer.append(this.confirmBttn);
+
+      this.confirmBttn.innerText = "Підтвердити";
+      this.confirmBttn.classList.add("modal__confirm-btn");
+      this.confirmBttn.addEventListener("click", () => {
+          this.noInfoMessage.innerText = "";
+          if (this.inputLogin.value === "" || this.inputPassWord.value === "") {
+              this.form.append(this.noInfoMessage);
+              this.noInfoMessage.innerText = "Усі поля мають бути заповнені";
+          } else {
+              confirmL(this.inputLogin.value, this.inputPassWord.value, this.closeModal.bind(this));
+          }
+      });
+  }
+  render(container = document.body) {
+      this.createElements();
+      container.append(this._modalElement);
+  }
+
+}
+
+
+
 
 export class Modal {
   constructor() {
@@ -42,14 +106,19 @@ export class Modal {
        this.createCard();
     })
 
-    this._btnCreateCard?.addEventListener("click", () => {
-      this.postGet();
-      loadAndSetLocalStorage();
-      renderItems();
+    this.addCard = this.addCard.bind(this)
 
-      this._goToSecondModal.disabled = true;
-      this._modalDiv.innerHTML = "";
-    })
+    this._btnCreateCard?.addEventListener("click", this.addCard)
+  }
+
+  addCard = () => {
+    this.postGet();
+    // loadAndSetLocalStorage();
+
+    // this._btnCreateCard.removeEventListener('click', this.addCard)
+
+    this._goToSecondModal.disabled = true;
+    this._modalDiv.innerHTML = "";
   }
 
   chooseDoctor(){
@@ -72,14 +141,8 @@ export class Modal {
             <option value="Нормальна">Нормальна</option>
             <option value="Низька">Низька</option>
         </select></br>
-        <label>ПІБ:</label></br>
-        <input placeholder="ПІБ" class="name"></input></br>`;
-
-/*       if(this._modalSelect.value === "Терапевт"){
-        this._modalDiv.innerHTML +=
-        `</br><label>Вік:</label></br>
-        <input placeholder="Вік..." class="age"></input></br>`;
-      } */
+        <label>Ім'я:</label></br>
+        <input placeholder="Ім'я" class="name"></input></br>`
 
       if (this._modalSelect.value === "Кардіолог"){
         this._modalDiv.innerHTML +=
@@ -147,10 +210,8 @@ export class Modal {
       <p><span>Короткий опис візиту: </span><span>${this.inputDescriptionValue}</span><p>
       <p><span>Статус: </span><span>${this.selectStatusValue}</span></p>
       <p><span>Терміновість: </span><span>${this.selectUrgencyValue}</span></p>
-      <p><span>ПІБ: </span><span>${this.inputNameValue}</span></p>`;
-/*     if(this._modalSelect.value === "Терапевт"){
-      this._modalBodyCard.innerHTML += `<p><span>Вік: </span><span>${this.inputAgeValue}</span></p>`;
-    } */
+      <p><span>Ім'я: </span><span>${this.inputNameValue}</span></p>`;
+
     if(this._modalSelect.value === "Кардіолог"){
       this._modalBodyCard.innerHTML +=
       `<p><span>Звичайний тиск: </span><span>${this.inputPressureValue}</span></p>
@@ -201,10 +262,13 @@ export class Modal {
           const currentArray = [ ...getDataFromLS("array") || [], response];
 
           setDataToLS("array", currentArray)
-          renderItems();
+          loadAndSetLocalStorage()
         } else {
             throw new Error();
         }
+    })
+    .catch(error => {
+      console.log(error)
     })
   }
   getCardById(id){

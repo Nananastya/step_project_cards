@@ -1,5 +1,4 @@
-import {deleteF} from "./script.js"
-import {Change} from "./change.js"
+import {Change} from "./edit.js"
 
 export class Visit {
     constructor(editAction, deleteAction) {
